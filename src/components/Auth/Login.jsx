@@ -4,6 +4,7 @@ import axios from "axios";
 const Login = ({onComponentChange}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,8 +17,10 @@ const Login = ({onComponentChange}) => {
             localStorage.setItem('name', data.name);
             localStorage.setItem('user_id', data.id);
             localStorage.setItem('token', data.access_token);
+
+            window.location = "/";
         } catch (error) {
-            // handle errors
+            setError(error.response.data.message)
         }
     }
 
@@ -25,7 +28,10 @@ const Login = ({onComponentChange}) => {
         <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input onChange={e => setEmail(e.target.value)} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                <input onChange={e => setEmail(e.target.value)} type="email" className={`form-control ${error? 'is-invalid' : ''}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                {
+                    error && <div className="invalid-feedback">{error}</div>
+                }
             </div>
             <div className="form-group">
                 <label for="exampleInputPassword1">Password</label>

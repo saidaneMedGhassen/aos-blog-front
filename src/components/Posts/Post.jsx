@@ -1,7 +1,9 @@
 import moment from 'moment';
-import React from 'react'
+import React from 'react';
+import CreateComment from './Comments/Comment/CreateComment';
+import Comments from './Comments/Comments';
 
-const Post = ({post, postDeleted}) => {
+const Post = ({post, postDeleted, deleteComment, commentPost}) => {
     return (
         <div className="card mb-2">
             <div className="card-header">
@@ -10,6 +12,9 @@ const Post = ({post, postDeleted}) => {
             </div>
             <div className="card-body">
                 <p className="card-text">{post.content}</p>
+
+                <Comments comments={post.comments} deleteComment={deleteComment} commentPost={commentPost} />               
+                <CreateComment post={post} commentPost={commentPost} />
             </div>
         </div>
     )

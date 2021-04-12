@@ -7,6 +7,11 @@ const Register = ({onComponentChange}) => {
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
+    const [nameError, setNameError] = useState("")
+    const [emailError, setEmailError] = useState("")
+    const [passwordError, setPasswordError] = useState("")
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -20,8 +25,12 @@ const Register = ({onComponentChange}) => {
             localStorage.setItem('name', data.name);
             localStorage.setItem('user_id', data.id);
             localStorage.setItem('token', data.access_token);
+
+            window.location = "/";
         } catch (error) {
-            // handle errors
+            setNameError(error.response.data.errors.name[0])
+            setEmailError(error.response.data.errors.email[0])
+            setPasswordError(error.response.data.errors.password[0])
         }
     }
 
@@ -29,15 +38,24 @@ const Register = ({onComponentChange}) => {
         <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label for="nameinput">Name</label>
-                <input onChange={e => setName(e.target.value)}  type="text" className="form-control" id="nameinput" placeholder="Enter your name..." />
+                <input onChange={e => setName(e.target.value)}  type="text" className={`form-control ${nameError? 'is-invalid' : ''}`} id="nameinput" placeholder="Enter your name..." />
+                {
+                    nameError && <div className="invalid-feedback">{nameError}</div>
+                }
             </div>
             <div className="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input onChange={e => setEmail(e.target.value)} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email..." />
+                <input onChange={e => setEmail(e.target.value)} type="email" className={`form-control ${emailError? 'is-invalid' : ''}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email..." />
+                {
+                    emailError && <div className="invalid-feedback">{emailError}</div>
+                }
             </div>
             <div className="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input onChange={e => setPassword(e.target.value)} type="password" className="form-control" id="exampleInputPassword1" placeholder="Enter your password..." />
+                <input onChange={e => setPassword(e.target.value)} type="password" className={`form-control ${passwordError? 'is-invalid' : ''}`} id="exampleInputPassword1" placeholder="Enter your password..." />
+                {
+                    passwordError && <div className="invalid-feedback">{passwordError}</div>
+                }
             </div>
             <div className="form-group">
                 <label for="exampleInputPassword2">Confirm Password</label>

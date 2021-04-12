@@ -11,7 +11,7 @@ const Auth = () => {
 
     return (
         <div className="container" style={{height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <div className="card p-5" style={{minWidth: "40%"}}>
+            <div className="card p-5" style={{minWidth: "500px"}}>
                 {displayLogin? <Login onComponentChange={toggleLogin} /> : <Register onComponentChange={toggleLogin} />}
             </div>
         </div>
