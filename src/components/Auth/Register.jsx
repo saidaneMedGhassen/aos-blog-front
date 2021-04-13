@@ -28,9 +28,15 @@ const Register = ({onComponentChange}) => {
 
             window.location = "/";
         } catch (error) {
-            setNameError(error.response.data.errors.name[0])
-            setEmailError(error.response.data.errors.email[0])
-            setPasswordError(error.response.data.errors.password[0])
+            if(error.response.data.errors.name){
+               setNameError(error.response.data.errors.name[0])
+            }
+            if(error.response.data.errors.email){
+               setEmailError(error.response.data.errors.email[0])
+            }
+            if(error.response.data.errors.password){
+                setPasswordError(error.response.data.errors.password[0])
+            }
         }
     }
 

@@ -20,7 +20,9 @@ const Login = ({onComponentChange}) => {
 
             window.location = "/";
         } catch (error) {
-            setError(error.response.data.message)
+            if(error.response.data){
+               setError(error.response.data.message)
+            }
         }
     }
 
